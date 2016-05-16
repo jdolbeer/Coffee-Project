@@ -25,7 +25,7 @@ var pikePlace = {
   },
   calcCupsPerHour: function() {
     for (var i = 0; i < hours.length; i ++) {
-      var cups = Math.round(customersPerHour * 1.2);
+      var cups = Math.ceil(this.customersPerHour[i] * this.avgCupsPerCustomer);
       this.cupsPerHour.push(cups);
       this.dailyCupsTotal += cups;
       this.beansNeededForCupsPerHour = cups / 16;
@@ -33,28 +33,29 @@ var pikePlace = {
   },
   calcPoundPackagesPerHour: function() {
     for (var i = 0; i < hours.length; i ++) {
-      var poundsPerHour = Math.round((customersPerHour * .34) - (cupsPerHour / 16));
+      var poundsPerHour = Math.ceil(this.customersPerHour[i] * this.avgPoundsPerCustomer);
       this.poundPackagesPerHour.push(poundsPerHour);
       this.dailyPoundPackagesTotal += poundsPerHour;
     }
   },
+
   calcBeansPerHour: function() {
     for (var i = 0; i < hours.length; i ++) {
-      var beansHour = Math.round(beansNeededForCupsPerHour + poundPackagesPerHour);
+      var beansHour = Math.ceil(this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i]);
+      console.log(beansHour);
+      this.beansPerHour.push(beansHour);
+      this.dailyBeansNeeded += beansHour;
     }
   },
   render: function() {
     pikePlace.calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
-    // call all of the other methods that calc data
+    pikePlace.calcCupsPerHour();
+    pikePlace.calcPoundPackagesPerHour();
+    pikePlace.calcBeansPerHour();
     var ulElement = document.getElementById('pike');
     for (var i = 0; i < hours.length; i++) {
-      // create a <li>
-      // give that <li> content
-      // append the <li> to the <ul>
       var liElement = document.createElement('li');
-      liElement.textContent = hours[i];
-      liElement.textContent = this.customersPerHour[i] + ' customers, ';
-      // liElement.textContent = this.cupsPerHour[i] + ' cups, ' + '(' + cupsPerHour / 16 + 'lbs)';
+      liElement.textContent = hours[i] + this.beansPerHour[i] + ' lbs.' + '[' + this.customersPerHour[i] + ' customers, ' + this.dailyCupsTotal[i] + ' (' + this.beansNeededForCupsPerHour[i] + ', ' + this.poundPackagesPerHour[i] + ')';
       ulElement.appendChild(liElement);
     }
   }
