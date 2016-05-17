@@ -1,5 +1,8 @@
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm:'];
 
+var numb = 123.23454;
+numb = numb.toFixed(2);
+
 var pikePlace = {
   locationName: 'Pike Place Market',
   minCustomersHour: 14,
@@ -43,7 +46,7 @@ var pikePlace = {
 
   calcBeansPerHour: function() {
     for (var i = 0; i < hours.length; i ++) {
-      var beansHour = Math.ceil(this.beansNeededForCupsPerHour + this.poundPackagesPerHour[i]);
+      var beansHour = Math.ceil(parseFloat(this.beansNeededForCupsPerHour + this.poundPackagesPerHour[i]).toFixed(2));
       console.log(beansHour);
       this.beansPerHour.push(beansHour);
       this.dailyBeansNeeded += beansHour;
@@ -57,7 +60,7 @@ var pikePlace = {
     var ulElement = document.getElementById('pike');
     for (var i = 0; i < hours.length; i++) {
       var liElement = document.createElement('li');
-      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' (' + this.beansNeededForCupsPerHour + ', lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
+      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + 'cups' + ' (' + this.beansNeededForCupsPerHour + ' lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
       ulElement.appendChild(liElement);
     }
   }
@@ -121,7 +124,7 @@ var capHill = {
     var ulElement = document.getElementById('capitol');
     for (var i = 0; i < hours.length; i++) {
       var liElement = document.createElement('li');
-      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' (' + this.beansNeededForCupsPerHour + ', lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
+      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + 'cups' + ' (' + this.beansNeededForCupsPerHour + ' lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
       ulElement.appendChild(liElement);
     }
   }
@@ -184,7 +187,7 @@ var seaLibrary = {
     var ulElement = document.getElementById('spl');
     for (var i = 0; i < hours.length; i++) {
       var liElement = document.createElement('li');
-      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' (' + this.beansNeededForCupsPerHour + ', lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
+      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + 'cups' + ' (' + this.beansNeededForCupsPerHour + ' lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
       ulElement.appendChild(liElement);
     }
   }
@@ -247,7 +250,7 @@ var slu = {
     var ulElement = document.getElementById('slu');
     for (var i = 0; i < hours.length; i++) {
       var liElement = document.createElement('li');
-      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' (' + this.beansNeededForCupsPerHour + ', lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
+      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + 'cups' + ' (' + this.beansNeededForCupsPerHour + ' lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
       ulElement.appendChild(liElement);
     }
   }
@@ -310,7 +313,7 @@ var seatac = {
     var ulElement = document.getElementById('seatac');
     for (var i = 0; i < hours.length; i++) {
       var liElement = document.createElement('li');
-      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + ' (' + this.beansNeededForCupsPerHour + ', lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
+      liElement.textContent = hours[i] + ': ' + this.beansPerHour[i] + ' lbs. ' + '[' + this.customersPerHour[i] + ' customers, ' + this.cupsPerHour[i] + 'cups' + ' (' + this.beansNeededForCupsPerHour + ' lbs.), ' + this.poundPackagesPerHour[i] + ' lbs. to-go]';
       ulElement.appendChild(liElement);
     }
   }
