@@ -1,5 +1,5 @@
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm:'];
-var allKiosks = [pikePlace, capHill, spl, slu, seatac];
+var allKiosks = [];
 // Start of Constructor
 function Kiosk(location, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer) {
   this.location = location;
@@ -16,14 +16,16 @@ function Kiosk(location, minCustomersHour, maxCustomersHour, avgCupsPerCustomer,
   this.dailyCupsTotal = 0;
   this.dailyPoundPackagesTotal = 0;
   this.dailyBeansNeeded = 0;
-} // End of Constructor
+  this.baristaTotalHours = 0;
+  this.baristaHoursNeeded = [];
+  allKiosks.push(this);
+}
 // Methods
 Kiosk.prototype.allTheCustomers = function(min, max) {
   for (var i = 0; i < hours.length; i ++) {
     var customers = Math.floor(Math.random() * (max - min + 1)) + min;
     this.customersPerHour.push(customers);
     this.dailyCustomersTotal += customers;
-    console.log(customers);
   }
 };
 Kiosk.prototype.allTheCups = function() {
@@ -32,7 +34,8 @@ Kiosk.prototype.allTheCups = function() {
     this.cupsPerHour.push(cups);
     this.dailyCupsTotal += cups;
     this.beansNeededForCupsPerHour.push(cups / 16);
-    // console.log(cups);
+    this.baristaTotalHours = (Math.ceil(cups * 2));
+    this.baristaHoursNeeded.push(Math.ceil(cups * 2 / 30));
   }
 };
 Kiosk.prototype.allThePackages = function() {
@@ -40,7 +43,6 @@ Kiosk.prototype.allThePackages = function() {
     var poundsPerHour = Math.ceil(this.customersPerHour[i] * this.avgPoundsPerCustomer);
     this.poundPackagesPerHour.push(poundsPerHour);
     this.dailyPoundPackagesTotal += poundsPerHour;
-    // console.log(poundsPerHour);
   }
 };
 Kiosk.prototype.allTheBeans = function() {
@@ -48,7 +50,6 @@ Kiosk.prototype.allTheBeans = function() {
     var beansHour = Math.ceil(this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i]);
     this.beansPerHour.push(beansHour);
     this.dailyBeansNeeded += beansHour;
-    // console.log(beansHour);
   }
 };
 // Instances in Constructor
@@ -82,7 +83,7 @@ seatac.allTheBeans();
 var beansTable = document.getElementById('beans-table');
 var tdElement = document.createElement('td');
 
-function createHeader() {
+function createBeansHeader() {
   var trElement = document.createElement('tr');
   var emptyCell = document.createElement('th');
   emptyCell.textContent = '';
@@ -97,17 +98,60 @@ function createHeader() {
   }
   beansTable.appendChild(trElement);
 };
-function createRows() {
-  var trElement = document.createElement('tr');
-  var pikeTotals = document.createElement('td');
-  pikeTotals.textContent = pikePlace.dailyBeansNeeded;
-  trElement.appendChild(pikeTotals);
-  // for (var i = 0; i < pikePlace.beansPerHour.length; i ++) {
-  //   var beansPerHourCell = document.createElement('td');
-  //   beansPerHourCell.textContent = beansPerHour[i];
-  //   trElement.appendChild(beansPerHourCell);
-  // }
-  beansTable.appendChild(trElement);
+function createBeanRows() {
+  for (var i = 0; i < allKiosks.length; i ++) {
+    var trElement = document.createElement('tr');
+    var allLocations = document.createElement('td');
+    allLocations.textContent = allKiosks[i].location;
+    trElement.appendChild(allLocations);
+    var dailyTotalBeans = document.createElement('td');
+    dailyTotalBeans.textContent = allKiosks[i].dailyBeansNeeded;
+    trElement.appendChild(dailyTotalBeans);
+    for (var j = 0; j < hours.length; j ++) {
+      var beanTotalPerHour = document.createElement('td');
+      beanTotalPerHour.textContent = allKiosks[i].beansPerHour[j];
+      trElement.appendChild(beanTotalPerHour);
+    }
+    beansTable.appendChild(trElement);
+  }
 }
-createHeader();
-createRows();
+var baristasTable = document.getElementById('baristas-table');
+var tdElement = document.createElement('td');
+
+function createBaristasHeader() {
+  var trElement = document.createElement('tr');
+  var emptyCell = document.createElement('th');
+  emptyCell.textContent = '';
+  trElement.appendChild(emptyCell);
+  var dailyTotalCell = document.createElement('th');
+  dailyTotalCell.textContent = 'Daily Total';
+  trElement.appendChild(dailyTotalCell);
+  for (var i = 0; i < hours.length; i++) {
+    var hoursCell = document.createElement('th');
+    hoursCell.textContent = hours[i];
+    trElement.appendChild(hoursCell);
+  }
+  baristasTable.appendChild(trElement);
+};
+function createBaristasRows() {
+  for (var i = 0; i < allKiosks.length; i ++) {
+    var trElement = document.createElement('tr');
+    var allLocations = document.createElement('td');
+    allLocations.textContent = allKiosks[i].location;
+    trElement.appendChild(allLocations);
+    var dailyTotalHours = document.createElement('td');
+    dailyTotalHours.textContent = allKiosks[i].baristaTotalHours;
+    console.log(baristaTotalHours);
+    trElement.appendChild(dailyTotalHours);
+    for (var j = 0; j < hours.length; j ++) {
+      var baristaTotalHours = document.createElement('td');
+      baristaTotalHours.textContent = allKiosks[i].baristaHoursNeeded[j];
+      trElement.appendChild(baristaTotalHours);
+    }
+    baristasTable.appendChild(trElement);
+  }
+}
+createBeansHeader();
+createBeanRows();
+createBaristasHeader();
+createBaristasRows();
