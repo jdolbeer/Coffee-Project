@@ -86,7 +86,7 @@ var tdElement = document.createElement('td');
 function createBeansHeader() {
   var trElement = document.createElement('tr');
   var emptyCell = document.createElement('th');
-  emptyCell.textContent = '';
+  emptyCell.textContent = '         ';
   trElement.appendChild(emptyCell);
   var dailyTotalCell = document.createElement('th');
   dailyTotalCell.textContent = 'Daily Total';

@@ -1,0 +1,17 @@
+ {
+  font-family: Verdana
+
+}
+th {
+  color: #006600;
+  padding-right: 5px;
+
+}
+td {
+  border: 1px solid black;
+  text-align: center;
+}
+td:nth-child(1) {
+  background: #006600;
+  color: white;
+}
