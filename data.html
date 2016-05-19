@@ -12,7 +12,28 @@
 
     <h1>Barista Hours Needed By Location Each Day</h1>
     <table class ="baristas-table" id="baristas-table"></table>
+    <form id="new store form">
+        <fieldset>
+          <legend>New Location Entry</legend>
 
+          <label for="location">Location: </label>
+          <input name="locationName" type="text" />
+
+          <label for="minCustomersHour">Minimum Traffic: </label>
+          <input name="minCustomersHour" type="text" size="1"/>
+
+          <label for="maxCustomersHour">Maximum Traffic: </label>
+          <input name="maxCustomersHour" type="text"  size="1"/>
+
+          <label for="avgCupsPerCustomer">Average Cups Per Customer: </label>
+          <input name="avgCupsPerCustomer" type="text"  size="1"/>
+
+          <label for="avgPoundsPerCustomer">Average Pounds Per Customer: </label>
+          <input name="avgPoundsPerCustomer" type="text"  size="1"/>
+
+          <button type="submit">Submit New Location</button>
+        </fieldset>
+      </form>
     <script src="app.js"></script>
   </body>
 </html>

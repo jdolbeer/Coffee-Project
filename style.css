@@ -1,9 +1,10 @@
- {
-  font-family: Verdana
-
+ * {
+  font-family: Arial;
+  background: #cccccc;
 }
 th {
-  color: #006600;
+  background-color: #006600;
+  color: white;
   padding-right: 5px;
 
 }
