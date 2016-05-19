@@ -1,5 +1,5 @@
  * {
-  font-family: Arial;
+  font-family: Verdana;
   background: #cccccc;
 }
 th {
@@ -15,4 +15,38 @@ td {
 td:nth-child(1) {
   background: #006600;
   color: white;
+}
+.opening {
+  font-size: 10;
+  justify-content: center;
+}
+.right {
+  border: 2px solid #006600
+  float: right;
+  margin: 0 0 10px 10px;
+  position: static;
+  height: 15em;
+}
+.left {
+  float: left;
+  border: 2px solid #006600
+  margin: 0px 10px 0px 0px;
+  padding: 20px;
+  height: 15em;
+}
+h1 {
+  text-align: center;
+  font-size: 55px;
+  border: 2px solid #006600
+}
+h2 {
+  text-align: center;
+  border: : 2px solid #006600;
+}
+.center
+{
+  display: block;
+      margin-left: auto;
+      margin-right: auto;
+      height: 15em;
 }
