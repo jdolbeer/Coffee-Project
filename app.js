@@ -1,5 +1,15 @@
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
 var allKiosks = [];
+var beansTable = document.getElementById('beans-table');
+var tdElement = document.createElement('td');
+var baristasTable = document.getElementById('baristas-table');
+var tdElement = document.createElement('td');
+var locationFormName = document.getElementById('new store form');
+var allDailyBeans = 0;
+var allDailyBaristas = 0;
+var totalCoffee = [];
+var totalBaristaHours = [];
+// Constructor
 function Kiosk(locationName, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer) {
   this.locationName = locationName;
   this.minCustomersHour = minCustomersHour;
@@ -17,37 +27,46 @@ function Kiosk(locationName, minCustomersHour, maxCustomersHour, avgCupsPerCusto
   this.dailyBeansNeeded = 0;
   this.baristaTotalHours = 0;
   this.baristaHoursNeeded = [];
+  this.totalBeans = [];
   allKiosks.push(this);
 }
 Kiosk.prototype.allTheCustomers = function(min, max) {
-  for (var i = 0; i < hours.length; i ++) {
-    var customers = Math.floor(Math.random() * (max - min + 1)) + min;
-    this.customersPerHour.push(customers);
-    this.dailyCustomersTotal += customers;
+  if (this.dailyCustomersTotal === 0) {
+    for (var i = 0; i < hours.length; i ++) {
+      var customers = Math.floor(Math.random() * (max - min + 1)) + min;
+      this.customersPerHour.push(customers);
+      this.dailyCustomersTotal += customers;
+    }
   }
 };
 Kiosk.prototype.allTheCups = function() {
-  for (var i = 0; i < hours.length; i ++) {
-    var cups = Math.ceil(this.customersPerHour[i] * this.avgCupsPerCustomer);
-    this.cupsPerHour.push(cups);
-    this.dailyCupsTotal += cups;
-    this.beansNeededForCupsPerHour.push(cups / 16);
-    this.baristaTotalHours = (Math.ceil(cups * 2));
-    this.baristaHoursNeeded.push(Math.ceil(cups * 2 / 30));
+  if (this.dailyCupsTotal === 0) {
+    for (var i = 0; i < hours.length; i ++) {
+      var cups = Math.ceil(this.customersPerHour[i] * this.avgCupsPerCustomer);
+      this.cupsPerHour.push(cups);
+      this.dailyCupsTotal += cups;
+      this.beansNeededForCupsPerHour.push(cups / 16);
+      this.baristaTotalHours = (Math.ceil(cups * 2));
+      this.baristaHoursNeeded.push(Math.ceil(cups * 2 / 30));
+    }
   }
 };
 Kiosk.prototype.allThePackages = function() {
-  for (var i = 0; i < hours.length; i ++) {
-    var poundsPerHour = Math.ceil(this.customersPerHour[i] * this.avgPoundsPerCustomer);
-    this.poundPackagesPerHour.push(poundsPerHour);
-    this.dailyPoundPackagesTotal += poundsPerHour;
+  if (this.dailyPoundPackagesTotal === 0) {
+    for (var i = 0; i < hours.length; i ++) {
+      var poundsPerHour = Math.ceil(this.customersPerHour[i] * this.avgPoundsPerCustomer);
+      this.poundPackagesPerHour.push(poundsPerHour);
+      this.dailyPoundPackagesTotal += poundsPerHour;
+    }
   }
 };
 Kiosk.prototype.allTheBeans = function() {
-  for (var i = 0; i < hours.length; i ++) {
-    var beansHour = Math.ceil(this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i]);
-    this.beansPerHour.push(beansHour);
-    this.dailyBeansNeeded += beansHour;
+  if (this.dailyBeansNeeded === 0) {
+    for (var i = 0; i < hours.length; i ++) {
+      var beansHour = Math.ceil(this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i]);
+      this.beansPerHour.push(beansHour);
+      this.dailyBeansNeeded += beansHour;
+    }
   }
 };
 var pikePlace = new Kiosk('Pike Place Market', 14, 35, 1.2, .34);
@@ -64,11 +83,38 @@ function AllTheCalls() {
     allKiosks[i].allTheBeans();
   }
 };
-AllTheCalls();
+function dailyTotalBeans() {
+  for (var i = 0; i < allKiosks.length; i ++) {
+    allDailyBeans += allKiosks[i].dailyBeansNeeded;
+    console.log(allDailyBeans);
+  }
+};
+function dailyTotalBaristas() {
+  for (var i = 0; i < allKiosks.length; i ++) {
+    allDailyBaristas += allKiosks[i].baristaTotalHours;
+  }
+};
+function allTotalBeans() {
+  var hourlyBeans = 0;
+  for (var i = 0; i < hours.length; i ++) {
+    hourlyBeans = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      hourlyBeans += allKiosks[j].beansPerHour[i];
+    }
+    totalCoffee.push(hourlyBeans);
+  }
+};
+function allTotalHours() {
+  var hourlyBaristas = 0;
+  for (var i = 0; i < hours.length; i ++) {
+    hourlyBaristas = 0;
+    for (var j = 0; j < allKiosks.length; j ++) {
+      hourlyBaristas += allKiosks[j].baristaHoursNeeded[i];
+    }
+    totalBaristaHours.push(hourlyBaristas);
+  }
+}
 // Table Creation
-var beansTable = document.getElementById('beans-table');
-var tdElement = document.createElement('td');
-
 function createBeansHeader() {
   var trElement = document.createElement('tr');
   var emptyCell = document.createElement('th');
@@ -101,9 +147,21 @@ function createBeanRows() {
     beansTable.appendChild(trElement);
   }
 }
-var baristasTable = document.getElementById('baristas-table');
-var tdElement = document.createElement('td');
-
+function createBeansTotal() {
+  var trElement = document.createElement('tr');
+  var totalCell = document.createElement('td');
+  totalCell.textContent = 'TOTAL';
+  beansTable.appendChild(trElement);
+  trElement.appendChild(totalCell);
+  var dailyBeans = document.createElement('td');
+  dailyBeans.textContent = allDailyBeans;
+  trElement.appendChild(dailyBeans);
+  for (var i = 0; i < totalCoffee.length; i ++) {
+    var theTotalBeans = document.createElement('td');
+    theTotalBeans.textContent = totalCoffee[i];
+    trElement.appendChild(theTotalBeans);
+  }
+};
 function createBaristasHeader() {
   var trElement = document.createElement('tr');
   var emptyCell = document.createElement('th');
@@ -136,34 +194,60 @@ function createBaristasRows() {
     baristasTable.appendChild(trElement);
   }
 }
-createBeansHeader();
-createBeanRows();
-createBaristasHeader();
-createBaristasRows();
+function createBaristasTotal() {
+  var trElement = document.createElement('tr');
+  var totalCell = document.createElement('td');
+  totalCell.textContent = 'TOTAL';
+  baristasTable.appendChild(trElement);
+  trElement.appendChild(totalCell);
+  var dailyBaristas = document.createElement('td');
+  dailyBaristas.textContent = allDailyBaristas;
+  trElement.appendChild(dailyBaristas);
+  for (var i = 0; i < totalCoffee.length; i ++) {
+    var theTotalBaristas = document.createElement('td');
+    theTotalBaristas.textContent = totalBaristaHours[i];
+    trElement.appendChild(theTotalBaristas);
+  }
+};
 // Form Creation
-var locationFormName = document.getElementById('new store form');
-
 function handleSubmitLocation(event) {
   event.preventDefault();
   if (!event.target.locationName.value || !event.target.minCustomersHour.value || !event.target.maxCustomersHour.value || !event.target.avgCupsPerCustomer.value || !event.target.avgPoundsPerCustomer.value)
   {
     return alert('Fields cannot be empty!');
   }
-  var locationName = event.target.locationName.value;
-  var minCustomersHour = event.target.minCustomersHour.value;
-  var maxCustomersHour = event.target.maxCustomersHour.value;
-  var avgCupsPerCustomer = event.target.avgCupsPerCustomer.value;
-  var avgPoundsPerCustomer = event.target.avgPoundsPerCustomer.value;
+  var addNewStore = new Kiosk(event.target.locationName.value, parseInt(event.target.minCustomersHour.value), parseInt(event.target.maxCustomersHour.value), event.target.avgCupsPerCustomer.value, event.target.avgPoundsPerCustomer.value);
 
-  var addNewStore = new Kiosk(locationName, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer);
+  event.target.locationName.value = null;
+  event.target.minCustomersHour.value = null;
+  event.target.maxCustomersHour.value = null;
+  event.target.avgCupsPerCustomer.value = null;
+  event.target.avgPoundsPerCustomer.value = null;
   var table = document.getElementById('beans-table');
   var table1 = document.getElementById('baristas-table');
   table.innerHTML = '';
   table1.innerHTML = '';
   AllTheCalls();
+  dailyTotalBeans();
+  dailyTotalBaristas();
+  allTotalHours();
   createBeansHeader();
   createBeanRows();
+  createBeansTotal();
   createBaristasHeader();
   createBaristasRows();
+  createBaristasTotal();
 }
 locationFormName.addEventListener('submit', handleSubmitLocation);
+
+AllTheCalls();
+allTotalBeans();
+dailyTotalBeans();
+allTotalHours();
+dailyTotalBaristas();
+createBeansHeader();
+createBeanRows();
+createBeansTotal();
+createBaristasHeader();
+createBaristasRows();
+createBaristasTotal();
