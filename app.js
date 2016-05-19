@@ -17,10 +17,6 @@ function Kiosk(locationName, minCustomersHour, maxCustomersHour, avgCupsPerCusto
   this.dailyBeansNeeded = 0;
   this.baristaTotalHours = 0;
   this.baristaHoursNeeded = [];
-  // this.baristaAllHours = [];
-  // this.baristaEachHour = [];
-  // this.allBeans = [];
-  // this.beansEachHours = [];
   allKiosks.push(this);
 }
 Kiosk.prototype.allTheCustomers = function(min, max) {
@@ -34,14 +30,10 @@ Kiosk.prototype.allTheCups = function() {
   for (var i = 0; i < hours.length; i ++) {
     var cups = Math.ceil(this.customersPerHour[i] * this.avgCupsPerCustomer);
     this.cupsPerHour.push(cups);
-    // console.log('store location' + this.locationName + ' : ' + cups);
     this.dailyCupsTotal += cups;
     this.beansNeededForCupsPerHour.push(cups / 16);
-    // console.log(cups);
     this.baristaTotalHours = (Math.ceil(cups * 2));
-    // console.log(cups);
     this.baristaHoursNeeded.push(Math.ceil(cups * 2 / 30));
-    // console.log(cups);
   }
 };
 Kiosk.prototype.allThePackages = function() {
@@ -148,7 +140,7 @@ createBeansHeader();
 createBeanRows();
 createBaristasHeader();
 createBaristasRows();
-
+// Form Creation
 var locationFormName = document.getElementById('new store form');
 
 function handleSubmitLocation(event) {
@@ -164,8 +156,6 @@ function handleSubmitLocation(event) {
   var avgPoundsPerCustomer = event.target.avgPoundsPerCustomer.value;
 
   var addNewStore = new Kiosk(locationName, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer);
-  console.log(addNewStore);
-  console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
   var table = document.getElementById('beans-table');
   var table1 = document.getElementById('baristas-table');
   table.innerHTML = '';
