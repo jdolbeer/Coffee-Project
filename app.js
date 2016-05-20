@@ -2,13 +2,18 @@ var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:0
 var allKiosks = [];
 var beansTable = document.getElementById('beans-table');
 var tdElement = document.createElement('td');
+var trElement = document.createElement('tr');
 var baristasTable = document.getElementById('baristas-table');
-var tdElement = document.createElement('td');
 var locationFormName = document.getElementById('new store form');
 var allDailyBeans = 0;
 var allDailyBaristas = 0;
 var totalCoffee = [];
 var totalBaristaHours = [];
+var pikePlace = new Kiosk('Pike Place Market', 14, 35, 1.2, .34);
+var capHill = new Kiosk('Capitol Hill', 12, 28, 3.2, .03);
+var spl = new Kiosk('Seattle Public Library', 9, 45, 2.6, .02);
+var slu = new Kiosk('South Lake Union', 5, 18, 1.3, .04);
+var seatac = new Kiosk('Seattle Tacoma Airport', 28, 44, 1.1, .41);
 // Constructor
 function Kiosk(locationName, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer) {
   this.locationName = locationName;
@@ -48,50 +53,34 @@ Kiosk.prototype.allTheCups = function() {
       this.beansNeededForCupsPerHour.push(cups / 16);
       this.baristaTotalHours = (Math.ceil(cups * 2));
       this.baristaHoursNeeded.push(Math.ceil(cups * 2 / 30));
-    }
-  }
-};
-Kiosk.prototype.allThePackages = function() {
-  if (this.dailyPoundPackagesTotal === 0) {
-    for (var i = 0; i < hours.length; i ++) {
       var poundsPerHour = Math.ceil(this.customersPerHour[i] * this.avgPoundsPerCustomer);
       this.poundPackagesPerHour.push(poundsPerHour);
       this.dailyPoundPackagesTotal += poundsPerHour;
-    }
-  }
-};
-Kiosk.prototype.allTheBeans = function() {
-  if (this.dailyBeansNeeded === 0) {
-    for (var i = 0; i < hours.length; i ++) {
       var beansHour = Math.ceil(this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i]);
       this.beansPerHour.push(beansHour);
       this.dailyBeansNeeded += beansHour;
     }
   }
 };
-var pikePlace = new Kiosk('Pike Place Market', 14, 35, 1.2, .34);
-var capHill = new Kiosk('Capitol Hill', 12, 28, 3.2, .03);
-var spl = new Kiosk('Seattle Public Library', 9, 45, 2.6, .02);
-var slu = new Kiosk('South Lake Union', 5, 18, 1.3, .04);
-var seatac = new Kiosk('Seattle Tacoma Airport', 28, 44, 1.1, .41);
-// Function Calls
+// Functions Calls
 function AllTheCalls() {
   for (var i = 0; i < allKiosks.length; i ++) {
     allKiosks[i].allTheCustomers(allKiosks[i].minCustomersHour, allKiosks[i].maxCustomersHour);
     allKiosks[i].allTheCups();
-    allKiosks[i].allThePackages();
-    allKiosks[i].allTheBeans();
   }
 };
 function dailyTotalBeans() {
-  for (var i = 0; i < allKiosks.length; i ++) {
-    allDailyBeans += allKiosks[i].dailyBeansNeeded;
-    console.log(allDailyBeans);
+  if (allDailyBeans === 0) {
+    for (var i = 0; i < allKiosks.length; i ++) {
+      allDailyBeans += allKiosks[i].dailyBeansNeeded;
+    }
   }
 };
 function dailyTotalBaristas() {
-  for (var i = 0; i < allKiosks.length; i ++) {
-    allDailyBaristas += allKiosks[i].baristaTotalHours;
+  if (allDailyBaristas === 0) {
+    for (var i = 0; i < allKiosks.length; i ++) {
+      allDailyBaristas += allKiosks[i].baristaTotalHours;
+    }
   }
 };
 function allTotalBeans() {
@@ -209,7 +198,6 @@ function createBaristasTotal() {
     trElement.appendChild(theTotalBaristas);
   }
 };
-// Form Creation
 function handleSubmitLocation(event) {
   event.preventDefault();
   if (!event.target.locationName.value || !event.target.minCustomersHour.value || !event.target.maxCustomersHour.value || !event.target.avgCupsPerCustomer.value || !event.target.avgPoundsPerCustomer.value)
@@ -217,20 +205,16 @@ function handleSubmitLocation(event) {
     return alert('Fields cannot be empty!');
   }
   var addNewStore = new Kiosk(event.target.locationName.value, parseInt(event.target.minCustomersHour.value), parseInt(event.target.maxCustomersHour.value), event.target.avgCupsPerCustomer.value, event.target.avgPoundsPerCustomer.value);
-
   event.target.locationName.value = null;
   event.target.minCustomersHour.value = null;
   event.target.maxCustomersHour.value = null;
   event.target.avgCupsPerCustomer.value = null;
   event.target.avgPoundsPerCustomer.value = null;
-  var table = document.getElementById('beans-table');
-  var table1 = document.getElementById('baristas-table');
-  table.innerHTML = '';
-  table1.innerHTML = '';
+  beansTable.innerHTML = '';
+  baristasTable.innerHTML = '';
   AllTheCalls();
   dailyTotalBeans();
   dailyTotalBaristas();
-  allTotalHours();
   createBeansHeader();
   createBeanRows();
   createBeansTotal();
@@ -239,7 +223,7 @@ function handleSubmitLocation(event) {
   createBaristasTotal();
 }
 locationFormName.addEventListener('submit', handleSubmitLocation);
-
+// Calling All Calls
 AllTheCalls();
 allTotalBeans();
 dailyTotalBeans();

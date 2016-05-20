@@ -1,6 +1,7 @@
  * {
   font-family: Verdana;
-  background: #cccccc;
+  background: #4d1a00;
+  color: #cccccc;
 }
 th {
   background-color: #006600;
@@ -35,13 +36,23 @@ td:nth-child(1) {
   height: 15em;
 }
 h1 {
-  text-align: center;
+
+}
+span {
   font-size: 55px;
-  border: 2px solid #006600
+  border: 2px solid #006600;
+  border-style: double;
+  border-width: 5px 5px 5px 5px;
+  padding: 10px;
+  display: table;
+  margin: 0 auto;
+
 }
 h2 {
   text-align: center;
   border: : 2px solid #006600;
+  display: table;
+  margin: 0 auto;
 }
 .center
 {
@@ -50,3 +61,14 @@ h2 {
       margin-right: auto;
       height: 15em;
 }
+legend {
+  font-size: 35px;
+  text-align: center;
+}
+button {
+    border: 5px solid black
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
