@@ -1,74 +1,115 @@
- * {
-  font-family: Verdana;
-  background: #4d1a00;
-  color: #cccccc;
-}
-th {
-  background-color: #006600;
-  color: white;
-  padding-right: 5px;
-
-}
-td {
-  border: 1px solid black;
+body {
   text-align: center;
+  background-color: #f2f2f2;
 }
-td:nth-child(1) {
-  background: #006600;
-  color: white;
-}
-.opening {
-  font-size: 10;
-  justify-content: center;
-}
-.right {
-  border: 2px solid #006600
-  float: right;
-  margin: 0 0 10px 10px;
-  position: static;
-  height: 15em;
-}
-.left {
-  float: left;
-  border: 2px solid #006600
-  margin: 0px 10px 0px 0px;
-  padding: 20px;
-  height: 15em;
-}
-h1 {
-
-}
-span {
-  font-size: 55px;
-  border: 2px solid #006600;
-  border-style: double;
-  border-width: 5px 5px 5px 5px;
-  padding: 10px;
-  display: table;
+#wrap {
   margin: 0 auto;
-
-}
-h2 {
-  text-align: center;
-  border: : 2px solid #006600;
-  display: table;
-  margin: 0 auto;
-}
-.center
-{
   display: block;
-      margin-left: auto;
-      margin-right: auto;
-      height: 15em;
+  margin: 0px auto;
+  font-family: Verdana;
+  background-color: #f2f2f2;
 }
-legend {
-  font-size: 35px;
+.left-border {
+	width:10px;
+	height: 100%;
+	background:#000;
+	display: block;
+	position: fixed;
+	z-index:9999;
+	top:0;
+	left: 0;
+}
+
+.right-border {
+	width:10px;
+	height: 100%;
+	background:#000;
+	display: block;
+	position: fixed;
+	z-index:9999;
+	top:0;
+	right: 0;
+}
+
+.top-border {
+	width:100%;
+	height: 10px;
+	background:#000;
+	display: block;
+	position: fixed;
+	z-index:9999;
+	top:0;
+	left: 0;
+}
+
+.bottom-border {
+	width:100%;
+	height: 10px;
+	background:#000;
+	display: block;
+	position: fixed;
+	z-index:9999;
+	left:0;
+	bottom: 0;
+}
+
+.center {
+margin: 0 auto;
+width: 100%;
+height: auto;
+}
+
+.heading {
+  font-family: Copperplate, Copperplate Gothic Light;
   text-align: center;
+  font-size: 40px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
-button {
-    border: 5px solid black
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 25px;
+
+.bodycopy { width: 66.66%;
+  margin: auto;
+  font-size: 1.5em;
+  color: grey;
+  font-weight: lighter;
+}
+
+.gradient {
+  height: 15px;
+  width: 1075px;
+  margin: auto;
+  background-color: grey;
+  background-image:
+    linear-gradient(
+      to right,
+        #f2f2f2, grey, #f2f2f2
+      );
+}
+
+.row {
+  color: #f2f2f2;
+  display: inline;
+}
+
+a:link {
+  color: grey;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+li2 {
+  margin-right: 75px;
+}
+
+.footer {
+position: relative;
+float: left;
+height: 267.5px;
+width: auto;
+background-position: 50% 50%;
+background-repeat: no-repeat;
+background-size: cover;
+}
