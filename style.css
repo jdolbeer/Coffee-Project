@@ -109,9 +109,9 @@ li2 {
 
 .footer {
 position: relative;
-float: left;
-height: 267.5px;
-width: auto;
+float: left;;
+width: 25%;
+height: auto;
 }
 /*TABLE STYLING */
 td:nth-child(1) {
