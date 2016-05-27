@@ -1,4 +1,7 @@
 /*FRONT PAGE STYLING*/
+* {
+  font-family: 'Cinzel', serif;
+}
 body {
   text-align: center;
   background-color: #f2f2f2;
@@ -61,7 +64,6 @@ height: auto;
 }
 
 .heading {
-  font-family: Copperplate, Copperplate Gothic Light;
   text-align: center;
   font-size: 40px;
   margin-top: 25px;
@@ -110,9 +112,6 @@ position: relative;
 float: left;
 height: 267.5px;
 width: auto;
-background-position: 50% 50%;
-background-repeat: no-repeat;
-background-size: cover;
 }
 /*TABLE STYLING */
 td:nth-child(1) {
@@ -132,7 +131,7 @@ td {
 }
 
 h3 {
-  font-family: Copperplate, Copperplate Gothic Light;
+  font-family: 'Cinzel', serif;
   text-align: center;
   font-size: 40px;
   margin-top: 25px;
